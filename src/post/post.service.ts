@@ -19,7 +19,6 @@ export class PostService {
 
         const [result, total] = await this.repository.findAndCount(
             {
-                relations: ["commendsList"],
                 where: { type: 1 },
                 take: take,
                 skip: skipuwu,
@@ -35,7 +34,7 @@ export class PostService {
     }
 
     async getById(id) {
-        return await this.repository.findOne({ relations: ["commendsList"], where: { id: id } })
+        return await this.repository.findOne({where: { id: id } })
     }
 
     async create(body: CreatePostDto) {
@@ -50,7 +49,6 @@ export class PostService {
     async getComments(id: number) {
         return await this.repository.find(
             {
-                relations: ["commendsList"],
                 where: { post: { id: id }, type: 2 },
                 order: { created: 'DESC' }
                 
@@ -61,6 +59,7 @@ export class PostService {
     async createCommend(body: CreatePostDto, id: number) {
         let post = await this.repository.findOne({ id: id })
         post.comments = post.comments + 1
+        await this.repository.save(post)
         return await this.repository.save({ ...body, post: post, type: 2 })
     }
 
