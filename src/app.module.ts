@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,13 +8,14 @@ import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'kashin.db.elephantsql.com',
+      host: process.env.HOST,
       port: 5432,
-      username: 'sfucsigz',
-      password: '2EhU3yscewMagTqU_AA0IT5n24t6W_WE',
-      database: 'sfucsigz',
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
       entities: [Post],
       synchronize: true,
     }),
