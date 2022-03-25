@@ -53,10 +53,11 @@ export class PostService {
                 relations: ["commendsList"],
                 where: { post: { id: id }, type: 2 },
                 order: { created: 'DESC' }
+                
             })
 
     }
-
+    
     async createCommend(body: CreatePostDto, id: number) {
         let post = await this.repository.findOne({ id: id })
         post.comments = post.comments + 1
