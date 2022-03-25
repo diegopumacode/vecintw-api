@@ -63,15 +63,14 @@ export class PostService {
         return await this.repository.save({ ...body, post: post, type: 2 })
     }
 
-    async like(id: number) {
+    async like(id: number, body) {
         let post = await this.repository.findOne({ id: id })
-        post.likes = post.likes + 1
+        post.likes = body.toggle ? post.likes - 1 : post.likes + 1 
         return await this.repository.save(post)
     }
-    async dislike(id: number) {
-        console.log(id)
+    async dislike(id: number,body) {
         let post = await this.repository.findOne({ id: id })
-        post.dislikes = post.dislikes + 1
+        post.dislikes = body.toggle ? post.dislikes - 1 : post.dislikes + 1 
         return await this.repository.save(post)
     }
 }

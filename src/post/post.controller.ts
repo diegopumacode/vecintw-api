@@ -38,13 +38,13 @@ export class PostController {
 
 
     @Put("/:id/like")
-    public like(@Param('id', ParseIntPipe) id: number){
-        return this.service.like(id);
+    public like(@Param('id', ParseIntPipe) id: number,@Body() body){
+        return this.service.like(id,body);
     }
 
     @Put("/:id/dislike")
-    public dislike(@Param('id', ParseIntPipe) id: number){
-        return this.service.dislike(id);
+    public dislike(@Param('id', ParseIntPipe) id: number,@Body() body){
+        return this.service.dislike(id,body);
     }
 
 }
